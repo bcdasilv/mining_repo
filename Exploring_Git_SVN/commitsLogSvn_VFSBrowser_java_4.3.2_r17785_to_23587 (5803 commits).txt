@@ -1,0 +1,42 @@
+started moving VFS browser WorkRequests to Tasks of the new threadpool. First the browser listing task
+removed a call to runInAWTThread()
+Major code cleanup. Removed unused Deprecated apis
+VFSBrowser escape handling fixed when used as a dialog (#3101808 - Alan Ezust)  
+Better dispose method.. 
+added @Override annotations and fixed brace placement
+If the current buffer is on a VFS that is not browseable (ex:http), trying   to open a new file was trying to browse the path of the current file giving   an error
+use of Task API in VFS Browser
+delatedAWT -> delayedAWT
+delatedAWT -> delayedAWT and fixed indentation
+no reason to rename a file if the new name is the same
+some simplification and reuse code
+Ability to rename favorites. Renaming a favorite now only apply a label on the favorite without modifying the target file (feature #3292159)
+Renaming favorite from properties dialog fixed renaming favorite present the favorite label instead of it's path
+Issue # 1571578 - can't use keyboard to popup menus in file system browser.  
+Indentation. 
+3440506 - Favorites Button stops working after add/remove. 
+OperatingSystem.isDOSDerived() is now deprecated since OS2 do not exists anymore Windows is the only DOS derived OS, so use OperatingSystem.isWindows() instead
+When copying a file in VFSBrowser, if a file with the same name already exists a suffix copy-n is added to avoid deleting the existing file (#3470759)
+moved private methods to the end of the file added explicit folds fixed the case where the session is null
+If I'm unable to create a unique filename I will not copy it and show an error
+New method MiscUtilities.getCompleteBaseName() to return the complete base name of a file (until the last .)
+Better way to paste multiple files to VFS Browser  - New constructors for CopyFileWorker:   CopyFileWorker(Component comp, VFSFile[] vfsFiles, String target)   CopyFileWorker(Component comp, VFSFile[] vfsFiles, String target,    			Behavior behavior)   CopyFileWorker(Component comp, File[] files, String target)   CopyFileWorker(Component comp, File[] files, String target, Behavior behavior)   to allow copy of multiple files at the same time    - New VFS.copy() methods:   copy(ProgressObserver progress, VFS sourceVFS, Object sourceSession,   	String sourcePath, VFS targetVFS, Object targetSession,   	String targetPath, Component comp, boolean canStop,   	boolean sendVFSUpdate)   copy(ProgressObserver progress, String sourcePath,String targetPath,    	Component comp, boolean canStop, boolean sendVFSUpdate) 
+Simplified CopyFileWorker to take a List<String> as source
+Fixed javadoc warnings.
+Fixed bug #3493415, an error messsage on double-clicking multiple directories.
+Fixed IO error when changing VFS Browser filter content  (#3502820) The reason was that ThreadUtilities.runInDispatchThread() runs the task immediately if already in DispatchThread, but in that case we want to wait to run it after all EDT work has been done
+Tabsize=4.  
+Added mnemonics for popup menus in File System Browser (Commands, Plugins,   Favorites). (request #3531054 Jarek Czekalski)
+Use of a scrollable list for delete dialog confirmation #2911520
+New api VFSBrowser.getLastVisitedPath() that may be handy for use in macros.
+Finish conversion of WorkRequest users to Task API. Patch 3556973
+Clean up conversion to Task API. Patch 3560625. 
+incomplete api documentation of VFSBrowser constants (#3562060) 
+Rolling back rev# 22360 - turns out BROWSER_DIALOG is actually not a directory-restricted browser, but just a multi-file open dialog.  I will properly document it in the next commit. 
+BROWSER_DIALOG is actually OPEN_MULTI_DIALOG.  Deprecated BROWSER_DIALOG.  
+Undoing rename of the BROWSER_DIALOG. Attempt at fixing # 3562060. 
+1. Revert class -> enum conversion of TaskManager 2. Fix warnings in jEdit class
+Minor fixes
+pasting files will paste a copy when the file already exist in the path
+Some more enhancements suggested by IntelliJIDEA.
+Some more suggestions from IntelliJ...

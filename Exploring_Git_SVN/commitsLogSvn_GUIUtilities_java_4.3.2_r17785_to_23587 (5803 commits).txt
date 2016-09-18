@@ -1,0 +1,30 @@
+Fixed GUIUtilities.confirm to always show the dialog in the EDT.
+use of EventQueue instead of SwingUtilities
+Major code cleanup. Removed unused Deprecated apis
+Removed deprecated apis  MiscUtilities.createWhiteSpace(int len, int tabSize)  MiscUtilities.getLeadingWhiteSpaceWidth(String str, int tabSize)  MiscUtilities.getColorHexString(Color c)  GUIUtilities.getColorHexString(Color c)  that were used in Whitespace plugin but not anymore
+Removed   GUIUtilities.NEW_BUFFER_ICON  GUIUtilities.DIRTY_BUFFER_ICON  GUIUtilities.READ_ONLY_BUFFER_ICON  GUIUtilities.NORMAL_BUFFER_ICON  GUIUtilities.WINDOW_ICON
+added annotations and minor changes
+fixed compilation error
+Got rid of extra Component placed around every JToolBar, introduced  by rev# 12604. 
+ New View option: Floatable toolbars.   New TextArea Option: Choice of color ordering w/ subpixel antialiasing.   
+small simplification
+Added a button to delete killring if it is too big to be loaded (the other options are still start without loading it or stop jEdit.) Also added GUIUtilities.option() that is used to show this dialog
+Rebalanced explicit folds
+SF Patch #1950147 (modified): Changed menus to use Mac-specific symbols for accelerator keys when using OS X and the native look & feel
+beginning of jEdit's keymap api
+Attempt to fix # 1794400. bg color in alternate L&Fs is not correct.  
+Tweaking applyTextAreaColors() 
+Got rid of EnhancedDialog's keylistener, as well as the ComboKeyListener, since the two of them were basically cancelling each other out.   
+Fixed indentation. Added a JTextPane case too. 
+jEdit is now always using continuous layout in JSplitPane
+Fix for tracker #3441535, message boxes not being created on EDT results in tiny, non-resizable message boxes.
+Show shortcut modifier symbols in standard order on OS X
+refactored keymap package to org.jedit.keymap
+javadoc 
+Tabsize=4.  
+Added mnemonics for popup menus in File System Browser (Commands, Plugins,   Favorites). (request #3531054 Jarek Czekalski)
+Fix for View that do not remember their position if they are maximized #3474127
+reverted changes done in 21918 as it introduce another bug Two bounds must be saved, one for full screen the other one for normal state
+Miscellaneous 1.6/1.7 and 5.1/5.2 replacements.  
+- GUIUtilities.getShortcutLabel() has a second boolean argument to specify   whether platform modifier symbols are desired or not. (#3615046 Makarius)   
+apply patch #519 - Allow splash screen that is not always on top  Use a native splash screen when available, which doesn't stay on top in my tests.

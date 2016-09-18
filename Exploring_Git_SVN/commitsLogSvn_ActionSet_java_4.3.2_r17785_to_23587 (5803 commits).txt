@@ -1,0 +1,3 @@
+beginning of jEdit's keymap api
+refactored keymap package to org.jedit.keymap
+Tabsize=4.  

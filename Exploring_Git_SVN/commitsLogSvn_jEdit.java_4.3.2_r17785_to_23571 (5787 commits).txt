@@ -1,0 +1,90 @@
+Removed some remains of simplified key handling. 
+switched to Java 1.6
+applied patch #2820969 - SOCKS proxy accessing wrong property 
+Fix a bug that appear sometimes when closing a buffer : In global scope, if you have a dirty buffer, split the view then close the buffer, you'll loose all your change
+Bumping Trunk to 4.5pre1. 
+Major code cleanup. Removed unused Deprecated apis
+Added a command-line option "-nosplash" to avoid the splash screen. This can help handle cases where plugins show dialogs that are hidden behind the splash screen and cause startup to get stuck.
+Minor changes
+Allow changes to the L&F during runtime to be effective immediately, rather than having to wait for next restart. 
+Reverted my previous change for allowing L&F changes to be effective immediately, as it still causes problems. 
+system tray is always available Clicking on the icon will toggle the visible state of all window or dialog if there is at least a view if there is no view, the perspective is restored to create one.
+Added an option for the systray icon in general option pane and use if a JPopupMenu, more customizable
+the tray icon is now a service org.gjt.sp.jedit.gui.tray.JEditTrayIcon
+Changes to the Look and Feel are now applied immediately without the need to restart the application.
+Fixed a class loading issue when no GUI (SplashScreen or TrayIcon) was shown on startup. The effects were visible if the VoxSpell plugin was installed and the Markdown plugin was tried to be used.
+- Only initialize LnF on startup and if it was actually changed.
+Applying patch: https://sourceforge.net/tracker/?func=detail&aid=3161330&group_id=588&atid=300588, fixes: https://sourceforge.net/tracker/?func=detail&aid=3034220&group_id=588&atid=100588. Also seems to fix the extra view that used to show up when I dragged a text file to the jEdit icon.
+Optimize performances of HistoryModel (patch #3185856)
+Bumping version to 4.6pre1 
+Bumping version to 5.0pre1. 
+beginning of jEdit's keymap api
+Added an option to use the native Quartz renderer on Mac OS X
+added old keymap migration
+jEdit is now always using continuous layout in JSplitPane
+Feature request# 2510763 - Store .jedit user settings in %APPDATA% on Windows 
+Simplified and added a null check.  
+Comments and code formatting. 
+refactored keymap package to org.jedit.keymap
+refactored migration package to org.jedit package
+Removed dependency on jEdit class
+- Document jEdit's command line parameters into Activity Log    (#2960844 - Alan Ezust)  
+Extended javadoc for jEdit.openTemporary and JEditBuffer.read/writeLock
+Made keymaps creation after determining jedit home. 
+If there are no settings, no reason to migrate keymaps
+Removed a cyclic dependency : KeymapMigration is now a service. The MigrationService is moved to org.jedit.core package that should contains core services from jEdit
+moved migration after service loading
+removed pluginJars map committed by mistake
+If the same plugin is installed in home and install folder, only the newest is loaded
+jEdit localization support
+fixed a regression : the jar must be added to jars before calling PluginJAR.init()
+Renamed initi18nProperties into initLocalizationProperties
+renamed i18n package into localization
+renamed i18n to localization
+Added getCurrentLanguage() method
+load jedit_en.props as a system property so it is default
+Made localized .props file to be in UTF-8 so that they can be edited directly without escaping non ISO-8859-1 characters.  Existing files were migrated as follows:   - Convert all existing escapes into the original characters     represented in UTF-8.     #!/bin/sh     for PROPS in *.props; do       native2ascii -encoding ISO-8859-1 $PROPS >$PROPS.ascii       native2ascii -reverse -encoding UTF-8 $PROPS.ascii >$PROPS     done   - Replace trailing spaces in values into "\u0020" not to be stripped     accidentally in the future.   - Remove all other trailing spaces in comments or empty lines.   - Set ":encoding=UTF-8:". 
+Made jedit_gui.props and jedit.props to be in UTF-8 so that they can be edited directly without escaping non ISO-8859-1 characters.  Migration was done in the same way as in r21302. 
+Record initPLAF: look and feel in the activity log.  All the other changes here are the doing of the WhiteSpace plugin.  
+Moved misplaced member declaration, fixed broken fold. 
+Final folding fix plus relocating of getKeyMapManager method from   Property methods to Misc methods 
+Added more time bencharking at jedit startup, written to the log   in the same fashion as splash screen does, with debug level.   Added total startup time to a "Startup complete" log entry (message level). 
+Fixed sorting of usage output. nosplash was improperly positioned, breaking   the alphabetic order (after removing "no" prefix"). 
+Fixed closing of views on jedit exit when not in background mode.   This bug was since ages. Only current view was being closed properly,   others were still open on System.exit(). ViewUpdate.CLOSED was not   sent for them. 
+Catched exceptions from SwingUtilities.updateComponentTreeUI(window) call   in jEdit.initPLAF(), similarly as the exceptions from   UIManager.setLookAndFeel were catched. If the exceptions are not catched,   then jedit may hang, like in #3512420. Made initplaf log more verbosely and report failure as warning. 
+Bumped the trunk version to 5.1 since the release branch for 5.0.x had been created. 
+API docs only. 
+javadoc again. 
+Implementation proposal for #3535945 to fix property priority order. PropertyManager: added pluginLocalizations list. PluginJAR: modified to use separated PropertyManager's prop list.
+Tabsize=4.  
+fixing Folds, bracket formatting, api docs.  
+Implemented Feature request #2931321 - Disable obsolete plugins  
+New debugging option "Beep on output", request #3551931.
+Send ViewUpdate.CREATED message _after_ peer is created. Needed to support OS X native full screen mode.
+The .jedit/modes/catalog is now written using UTF-8 instead of default OS encoding (#3560800)
+Fix File status checking after buffer switch (#1871440 Alan Ezust)  
+Fix checkFileStatus default value during upgrade.  
+Clean up conversion to Task API. Patch 3560625. 
+fix type in logging
+correctly determine whether Look and Feel did change to not touch it if it stays the same as this might cause delays and Exceptions
+- Deprecated extra overloads of IOUtilities.closeQuietly() in favor of   using Java5 closeQuietly(Closeable) instead.  
+3587590 - Don't hardocde localhost.   - Thomas Meyer If the host is null then an InetAddress representing an address of the loopback interface is returned. See RFC 3330 section 2 and RFC 2373 section 2.5.3.   
+Patch 3582760: fix window class on gnome/linux
+fixed coding style
+Clean up of logic for loading plugin.
+Fix bug 3596616 - Macro Files/Insert_Selection.bsh
+1. Revert class -> enum conversion of TaskManager 2. Fix warnings in jEdit class
+#3610089: Initial view hidden by other windows at startup. 
+Made the plugin manager loading much faster  How : checking if the file exist consume time so make this test only if the previous tests failed. Doing that the loading of that dialog is divided by 3 on my machine
+jEdit 5.1 requires Java 1.7 now.   
+Reverse merge 22931 and 22934. jEdit 5.1 will require java6, jEdit 6.0 (or 5.2 whatever is the next version) will require Java7.  
+Update the version number to 5.2pre1
+jEdit 5.2 depends on Java 1.7. No more Java 1.6 compatibility requirements.  We don't need these version.targets at the moment since we only target to one version so I removed them. We can re-add them if we need to later.  
+#3615044 removal of noquartz stuff which is irrelevant now that we require java 1.7  
+Applied patch #3615045 (Makarius), plus some additional cleanup of setting the look and feel
+Removed the noquartz code again (see rev 23205).
+Replaced many "for" loops with "for each" with IntelliJIDEA's code inspection tool. Kept some where the index may be useful for debugging (and also some others where it doesn't, because the list is too long...).
+Some more enhancements suggested by IntelliJIDEA.
+Some more suggestions from IntelliJ...
+Fixed the systray not added on EDT thread
+Bumping version to 5.3pre1 

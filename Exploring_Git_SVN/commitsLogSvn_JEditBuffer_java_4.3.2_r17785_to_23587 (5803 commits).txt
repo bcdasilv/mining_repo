@@ -1,0 +1,42 @@
+Added convenience method getText() as alias to getText(0, getLength())
+- Added @since tag to new param-less JEditBuffer.getText() method - Noted about this metod into API Changes secion of doc/CHANGES.txt 
+API doc changes. 
+Clarified api docs. 
+Removed unnecessary log message.  Generating this message is a serious performance issue when there are no fold handlers installed.
+Committed patch #3087617: Elastic tab stops, developed by Anshal Shukla.
+use of generics and made fields private
+Major code cleanup. Removed unused Deprecated apis
+minor changes
+- New methods JEditBuffer.setContextInsensitive(boolean) and   JEditBuffer.GetContextInsensitive() to manage the new attribute   contextInsensitive of JEditBuffer. By default it is set by the   edit mode, but you can change it's value (careful, it can break   the syntax highlight of your buffer if you don't know what you do)    (Matthieu Casanova)      - New property for the edit modes : contextInsensitive.   By default the value is false, but if set to true the color highlight of   a line of the buffer do not depends on the previous line. It works of course   only for modes that do not have multiline comments and no tokens that can be   on several lines (like literal in several languages)   This cause major performances improvement on buffers that use an edit mode   that is context insensitive.   The following modes are now context insensitive :   assembly-agc   assembly-ags   assembly-m68k   assembly-mcs51   assembly-parrot   assembly-r2000   assembly-x86   awk   cobol   csv   csv-commits   eiffel   foxpro   hex   htaccess   hxml   icon   ini   jmk   json   mqsc   outline   props   ptl   pvwave   rfc   rib   rpmspec   sip   splus   sqr   squidconf   svn-commit   text   vhdl   visualbasic   yab
+When editing a big file, a dialog will suggest to disable syntax highlight or make it context-insensitive so that jEdit remains fast
+Fixed several case where userinput during buffer loading cause exceptions (#3398342)
+Rebalanced explicit folds
+some simplifications
+Added a simplified auto indentation scheme and documented this and the previous indentation change
+Guarded encoding property from being set as a buffer local property. It caused confusion when it was set to a different encoding other than one actually used at loading or saving the buffer. (SF.net patch #3434651, for bug #1643580, tweaked a bit by me) 
+fix whitespaces
+Bug #3438680: When parsing buffer-local properties, there was a problem with escape processing that prevented buffer-local properties to be read sometimes
+Using no highlight or limited syntax highlight in large buffers now disable highlight of very long lines
+Extended javadoc for jEdit.openTemporary and JEditBuffer.read/writeLock
+coding style fix
+New method JEditBuffer.insert(int offset, CharSequence seq) to insert text in a buffer. This removes some duplicate code
+Fixed #1936678 'too sensitive electric keys', making them work only when   a rule affecting the current line is found (unindentThisLine or   a closing bracket). For this to work the api must have been changed:   indent.IndentRule became an abstract class (previously an interface)   providing a new method: getRuleName. 
+Added the option (in Editing section) to control electric keys mode:   'on', 'smart', 'brackets only' or 'off'. Default is 'on'. FR #3514076.
+Electric keys smart mode: made brackets be treated always as electric.   It's because of the problems in detecting when the bracket rules match.   So the case when a bracket is inside a string literal is still waiting   for better handling. Maybe by further extension of the IndentRule class.
+Removed debugging code.
+Finally found a way to treat electric brackets in a 'smart' way. Now   if they are inside string literals, they don't trigger reindentation.   Making IndentRule.lineMatches method public was needed.
+Added removePosition method to buffer.PositionManager. Explicit removal   is not necessary, but should improve performance, because maintaining   unneeded positions is expensive. They are adjusted with every   text insertion and removal.
+Fixed another border case in smart UTL electric keys mode: fun(a ? x :
+Added second electric keys smart mode: smart DMI (Disabled by Manual   Indentation). (request #3523811 Jarek Czekalski)
+Implemented NLO (New Line Only) electric keys mode, inspired by post   http://jedit.9.n6.nabble.com/jEdit-devel-Comments-on-smart-DMI-electric-key-mode-tp4980181.html
+Reverted the recent series of changes for the problematic behavior of electricKeys. This reversion is meant to be a preparation for the finally concluded fix which came out from the discussion about these changes. http://jedit.9.n6.nabble.com/jEdit-devel-Why-electric-keys-need-separate-modes-in-their-effect-tp4976021.html  Specifically, r21630,21634,21636-21639,21662-21663,21667-21668, 21673-21674,21687 were reverted with reverse merge command. There was only one conflict on CHANGES.txt which was easy to resolve. 
+Brought back the javadoc, that was gone after revert in r21723
+Implemented comparable in JEditBuffer and Buffer, to allow for   resource ordering. The discussion:   http://jedit.9.n6.nabble.com/jEdit-devel-dealing-with-deadlocks-in-jedit-avoid-them-tp4998871.html   Wiki:   https://sourceforge.net/apps/mediawiki/jedit/index.php?title=JEdit_api_common_pitfalls#Deadlocks
+Reverted r21739 - controversial anti-deadlock rules.
+Tabsize=4.  
+Optimized reading elasticTabstops property in TextArea   (patch #3533830 Thomas Meyer) plus my comments on   JEditBuffer.elasticTabstopsOn field.
+Undo restores selection state in simple cases (deletions, replaces   on simple range selections). (patch #1570553 Maik Nijhuis, Thomas Meyer,   Jarek Czekalski)
+Use an initialization block in JEditBuffer to avoid duplicate code. Patch# 3577605 Thomas Meyer  
+The FoldHandler must not be null. It happened for temporary buffers since [22949] because setMode() was not called anymore (from setMode(),  propertiesChanged() was not called, setting the fold handler)
+Replaced many "for" loops with "for each" with IntelliJIDEA's code inspection tool. Kept some where the index may be useful for debugging (and also some others where it doesn't, because the list is too long...).
+Some more suggestions from IntelliJ...

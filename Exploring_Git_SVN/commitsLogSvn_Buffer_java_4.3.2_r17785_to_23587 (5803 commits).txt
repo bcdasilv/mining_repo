@@ -1,0 +1,43 @@
+Added MiscUtilities.md5() method for calculating md5sum of the string and as result Buffer.calculateHash() method refactored to avoid code duplications.	 
+md5() method moved from MictUtilities to StandardUtilities (in according to Matthieu advise)
+If the autoreload option of the buffer is modified, the value is not lost after saving the buffer #2999966  and fixed some changelog format according to what was said on the devel mailing list
+refactored MarkerSaveRequest as a Task instead of a WorkRequest
+API doc changes. 
+Clarified api docs. 
+Major code cleanup. Removed unused Deprecated apis
+More api removed  Buffer.addBufferChangeListener(BufferChangeListener listener)  Buffer.removeBufferChangeListener(BufferChangeListener listener)  Buffer.addBufferChangeListener(BufferChangeListener listener)  BufferChangeAdapter  BufferChangeListener
+added some javadoc
+After using save-as action on a read-only buffer the new buffer is no longer read-only (#3148102)
+Consider full path when using file name glob in edit mode decisions (#2557712)  
+A temporary buffer was not settings it's edit mode, breaking the hypersearch request since new feature that search for whole word
+added comments
+When editing a big file, a dialog will suggest to disable syntax highlight or make it context-insensitive so that jEdit remains fast
+fix big file loading if userMode is set
+added buffer name to the dialog title
+minor: balance explicit folding 
+Fixing a merge error. 
+Filename globs for matching edit modes now support specifying a full path as glob with either "/" or "\" as path separator while "\" has to be doubled as it is also the escape character for meta characters. 
+fix independent textarea
+Created an option to disable automatic indentation, and an accompanying status bar widget
+Added a simplified auto indentation scheme and documented this and the previous indentation change
+The EditingOptionPane has now an option to remember the user choice about large file treatment
+Using no highlight or limited syntax highlight in large buffers now also disable soft wrap
+Using no highlight or limited syntax highlight in large buffers now disable highlight of very long lines
+if largeBufferSize property is 0, the large buffer handling is deactivated
+New option in Saving and Backup pane: Use File System Browser dir for   Save-As (# 1591441)   
+added missing closing explicit fold
+Implemented comparable in JEditBuffer and Buffer, to allow for   resource ordering. The discussion:   http://jedit.9.n6.nabble.com/jEdit-devel-dealing-with-deadlocks-in-jedit-avoid-them-tp4998871.html   Wiki:   https://sourceforge.net/apps/mediawiki/jedit/index.php?title=JEdit_api_common_pitfalls#Deadlocks
+Reverted r21739 - controversial anti-deadlock rules.
+Tabsize=4.  
+ Fix memory usage of Buffer.calculateHash() (patch# 3560429, Thomas Meyer)  
+File status checking before save (#3562315, Alan Ezust)  
+#3562315 cont'd: if user has "do nothing" for "if files are changed on disk" option, then don't popup that dialog asking user to reload, just ignore the fact that it was changed.   
+#3562323 again - use buffer flag instead of jedit property.  
+Fix File status checking after buffer switch (#1871440 Alan Ezust)  
+Clean up conversion to Task API. Patch 3560625. 
+Addressing some of the comments from merge req#3564012.   
+Renamed abbreviate() to abbreviateView(), new API which observes the view option for whether to abbreviate paths in the jEdit View. abbreviate() behavior is restored to how it worked previously so this option does not break plugins such as ProjectViewer and BufferList which also use this API and have a separate option to control whether it is used.  
+TaskManager: Refactor IoTask - Make IoTask a subclass of Task and remove the code of the special case. 
+Fix mode loading for temporary buffers
+The contextInsensitive flag of the edit mode was not used at the first use   of the edit mode, because the mode is loaded after
+Replaced many "for" loops with "for each" with IntelliJIDEA's code inspection tool. Kept some where the index may be useful for debugging (and also some others where it doesn't, because the list is too long...).

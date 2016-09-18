@@ -1,0 +1,49 @@
+Improve indentation settings of the shellscript edit mode and re-indent the current line before inserting a newline in insert-newline-indent action. (bug #3005463)
+Revert the re-indentation of the current line before inserting a newline in insert-newline-indent action for now.
+Fixed caret going to the wrong position when adding explicit folds in a buffer that uses an edit mode that has no line comment (#2138160)
+Fixed caret going after the explicit folds when adding explicit folds   to the wrong position when adding explicit folds while having no   selection, in any edit mode
+Ability to change cursor of the textarea  Added methods to manage the cursor if the TextArea :   In the TextAreaPainter class, added   resetCursor()   setCursor(Cursor)   The cursor behavior is the following :   when the cursor is the default one : TEXT_CURSOR,   when typing text it is hidden, after moving the mouse it reappears.   If a plugin calls setCursor() to replace it for whatever reason,   the cursor will not disappear anymore when typing or be changed to    TEXT_CURSOR until resetCursor() is called
+Fixed TextArea.selectBlock() when the block is at offset 0 (#3062072)
+Committed patch #3087617: Elastic tab stops, developed by Anshal Shukla.
+New method TextArea.getVisibleLineText(lineIndex) that returns   the visible part of the given line
+Applied patch #3091530 - Elastic tabstops fix - by Anshal Shukla.
+Applied patch 3023134 from Matthew Gilbert to add ability to increase/decrease line spacing in the text area.
+Changed new api methods TextArea.getVisibleLineText() to use screenLine instead of physicalLine so it works with softwrap
+added a few javadoc
+Collapsing all folds will move the caret outside any fold if necessary
+Removed deprecated method TextArea.getMarkLine()
+Dynamic softwrap. Now the softwrap margin is the minimum of the buffer wrap   guide and the max length displayable in the TextArea (patch #2846458)
+Removed unnecessary calls to painter.getFontMetrics()
+minor changes
+Fixed explicit fold
+Pressing left arrow when the caret is at the buffer start but in a selection   now cancel the selection as it should do (#3396672)
+removed unnecessary todo and minor simplification
+Fixed several case where userinput during buffer loading cause exceptions (#3398342)
+Fixed a corner case when trying to move caret during a buffer operation (loading, transaction, undo) prevent to move the caret forever
+Reverted change from revision 19847, which broke scrolling when the caret goes outside the screen, e.g. by typing at the end of the visible area (right or bottom). 
+Added support for the newline character in electricKeys
+Created an option to disable automatic indentation, and an accompanying status bar widget
+Fix for #3434527 - Still focus on wrong line with folded target
+Added a simplified auto indentation scheme and documented this and the previous indentation change
+Using no highlight or limited syntax highlight in large buffers now also disable soft wrap
+Made basic edit operations aware of characters above BMP and combining character sequences. (SF.net bug #3040720)  Specifically, the fixed operations are caret movements, selection, delete, and backspace. Many other derived operations which use caret positions or selection ranges also became safe unless the offsets were altered by programs which are not aware of above mentioned characters.  Direct buffer operations are not in scope of this fix. 
+showPopupMenu() method from TextArea is made public because it can be used by beanshell actions The same method from JEditTextArea is removed because it does the same thing. 
+The JEditEmbeddedTextArea do not create an empty popup menu anymore.   To add a context menu in your JEditEmbeddedTextArea, please override   createPopupMenu(MouseEvent evt) as before, but also call   setRightClickPopupEnabled(true) in your constructor
+Made the method TextArea.isCaretVisible public. (patch #3518424 Makarius)
+Fixed #1936678 'too sensitive electric keys', making them work only when   a rule affecting the current line is found (unindentThisLine or   a closing bracket). For this to work the api must have been changed:   indent.IndentRule became an abstract class (previously an interface)   providing a new method: getRuleName. 
+Added a check for electric key (in smart UTL mode) before the insertion   of the character is done, as suggested by Kazutoshi:   http://jedit.9.n6.nabble.com/jEdit-devel-jedit-Bugs-3523766-std-in-C-remains-unindented-as-a-label-tp4955036p4960905.html
+Added second electric keys smart mode: smart DMI (Disabled by Manual   Indentation). (request #3523811 Jarek Czekalski)
+Changed calculation of wrap margin to be based on an average character width instead of a width of a space which gave very narrow wrap margin for proportional fonts. 
+Reverted the recent series of changes for the problematic behavior of electricKeys. This reversion is meant to be a preparation for the finally concluded fix which came out from the discussion about these changes. http://jedit.9.n6.nabble.com/jEdit-devel-Why-electric-keys-need-separate-modes-in-their-effect-tp4976021.html  Specifically, r21630,21634,21636-21639,21662-21663,21667-21668, 21673-21674,21687 were reverted with reverse merge command. There was only one conflict on CHANGES.txt which was easy to resolve. 
+Restricted the trigger of electricKeys to reduce annoyance of them that cancel obvious manual indentations. (SF.net Bug #1936678, #2332140)  This restriction was invented after some prior trials, which were reverted in r21723, and superseded them. http://jedit.9.n6.nabble.com/jEdit-devel-Why-electric-keys-need-separate-modes-in-their-effect-tp4976021.html 
+Brought back the javadoc, that was gone after revert in r21723
+Tabsize=4.  
+Fix bugs 2832769, 2998294, and 3193168 - Hopefully nothing else breaks by this invasive change. *Somebody* should create some unit tests to transform fear into boredeom...
+added @Nonnull annotations
+Fix performance revealed in bug #3590540, patch #3595304
+Get rid of a false check that the buffer is editable before turning on elastic tabstops. This check existed in the initial implementation of the elastic tabstops, when the feature actually modified the buffer, but it no longer does that.
+Some more enhancements suggested by IntelliJIDEA.
+Committed patch #3607873 by Marc Häfner. Thanks Marc! This patch fixes cursor misplacement with auto-indent. 
+fixed coding style
+Applied patch #518, improved layout manager for text area.
+Focus the text area when scroll bar is clicked (patch #521 - Jordan Miner) Selecting line from gutter should move caret (patch #520 - Jordan Miner)  

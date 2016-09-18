@@ -1,0 +1,12 @@
+Applied patch 3023134 from Matthew Gilbert to add ability to increase/decrease line spacing in the text area.
+removed unused import
+Fixed the condition and ordering of a call of loadCaretInfo() in EditPane#setBuffer() which caused unwanted jump after loading a buffer via Hyperseach Result nodes. (Based on SF.net patch #3153909 addressing SF.net bug #3134951) 
+Improved a comment introduced at r19199 to give more accurate information. 
+more fixes to bufferSets
+Tabsize=4.  
+added @Nonnull & @Nullable annotations to arguments of constructor and setBuffer methods
+1871440 - File Status checking after buffer switch does not always work.  
+Rolling back previous change - it introduced unwanted side effects on buffer change.  
+Fix File status checking after buffer switch (#1871440 Alan Ezust)  
+Addressing some of the comments from merge req#3564012.   
+Replaced many "for" loops with "for each" with IntelliJIDEA's code inspection tool. Kept some where the index may be useful for debugging (and also some others where it doesn't, because the list is too long...).

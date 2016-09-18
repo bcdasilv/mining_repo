@@ -1,0 +1,14 @@
+beginning of jEdit's keymap api
+Fixed standalone textArea that was broken since keymaps api
+The JEditEmbeddedTextArea do not create an empty popup menu anymore.   To add a context menu in your JEditEmbeddedTextArea, please override   createPopupMenu(MouseEvent evt) as before, but also call   setRightClickPopupEnabled(true) in your constructor
+More API docs. 
+remove default popupmenu from StandaloneTextArea too
+remove default popupmenu from StandaloneTextArea too
+Tabsize=4.  
+Set svn:eol-style to native in .java and .props files, which had not this flag set, probably due to forgetting
+removed addMenuItem() method that should have been removed when removing the default popup menu
+removed unused imports
+Fixed the StandaloneTextArea that cannot load keymaps (#3562023)
+- Deprecated extra overloads of IOUtilities.closeQuietly() in favor of   using Java5 closeQuietly(Closeable) instead.  
+Some more enhancements suggested by IntelliJIDEA.
+Support for shortcuts to "copy" the error in Error widget 

@@ -1,0 +1,5 @@
+When macros are reloaded, if one of them was overriding a built-in action,   the action is not restored if the overriding macro is removed    (#3110689)
+Fix for tracker #3441535, message boxes not being created on EDT results in tiny, non-resizable message boxes.
+Tabsize=4.  
+Some more tiny fixes suggested by IntelliJIDEA's code inspection tool.
+Replaced many "for" loops with "for each" with IntelliJIDEA's code inspection tool. Kept some where the index may be useful for debugging (and also some others where it doesn't, because the list is too long...).

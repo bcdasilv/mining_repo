@@ -1,0 +1,22 @@
+Refactored the HyperSearchRequest to a Task
+- The "buffer" variable is always the current buffer and not the buffer   where the replacement occurs when using beanshell snippet replacement   (#3043118)
+Fixed a memory leak in the beanshell snippet replacement #3043132
+use of CharSequence instead of String to reduce memory usage
+In search and replace when replacing by a beanshell snippet, it is now possible to use multiple statements instead of  only one statement. To do that, enclose your code in braces (patch #3002207)
+Fixed incorrect behaviors of Find Next/Previous happened when invoked at a start/end of line, and corrected wrong javadoc comments of SearchMatcher#nextMatch() with its duplicates, as the cause of problem. (SF.net bug #2953604)  All of callers of SearchMatcher#nextMatch() in sight, are now passing correct arguments. The javadoc comments had been out of date for years. 
+Added an option to search for entire words (patch #2842461)
+escape regex characters in whole word search
+fix whole word search
+Entire word search rewritten : now the search is done as usual, then before returning the result it is checked to be a whole word, if not, the next result is searched (and checked).  A whole word has the following conditions :    start of word :  beginning of the line  starts with a symbol or space  char before the first char is a symbol or space    end of word:  end of line  ends with  a symbol or space  char next to the last char is a symbol or space
+use of getSmartCaseReplace() instead of inline code
+Added support for find previous when searching in multiple files
+Tabsize=4.  
+Made fetching noWordSep property consistent with the majority of code.   In most cases it seems to be more suitable to read it from buffer   (like in TextArea), not from mode.
+Fixed bug #3522497, "Whole word" option does not work in Replace   with "Extra word characters", patch #3543524 Malathi
+Fix File status checking after buffer switch (#1871440 Alan Ezust)  
+Clean up conversion to Task API. Patch 3560625. 
+fixed indent size since tabs are only 4 spaces width
+several small fixes: spelling, unused imports, use createVFSSessionSafe in DirectoryListSet
+1. Revert class -> enum conversion of TaskManager 2. Fix warnings in jEdit class
+Fix mode loading for temporary buffers
+Some more enhancements suggested by IntelliJIDEA.

@@ -1,0 +1,24 @@
+3022084 - Patch for bug 2960128
+Added some calls to closeAllMenus() from some other actions that should...
+Fixed SF bug #2944752: Search bar not shown in full screen mode.
+Committed patch #3087617: Elastic tab stops, developed by Anshal Shukla.
+Major code cleanup. Removed unused Deprecated apis
+Fix for tracker 3134215, 'restore previously opened files' setting was not being considered when saving and restoring perspective.
+Rebalanced explicit folds
+added annotations and made fields final
+jEdit is now always using continuous layout in JSplitPane
+Show a preview of the window rather than a low-resolution icon when minimizing on Mac OS X (#3529980)
+Tabsize=4.  
+New method: View.getBuffers(), aware of bufferset scope.   
+fixing Folds, bracket formatting, api docs.  
+minor changes and fixed coding style
+factorized some code about Edit pane creation
+Fix File status checking after buffer switch (#1871440 Alan Ezust)  
+Exclusive buffersets: Ignore dirty buffers.  
+fix whitespaces
+#3017650: Handle menu bar mnemonics with precedence over otherwise defined shortcuts as they are shown visually to the user
+Disable menu bar mnemonics if they are mapped as otherwise defined shortcuts so that they are not shown visually to the user when they actually do not work and make sure that no conflict can arise with the default keymap and any localization
+Added a checkbox next to toggle fullscreen mode.  
+Protect against plugins adding items to the main menu bar that are not JMenu items.
+Some more enhancements suggested by IntelliJIDEA.
+View.getBuffers() is now sorted according to View options.  
